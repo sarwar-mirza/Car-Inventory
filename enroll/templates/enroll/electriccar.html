@@ -1,0 +1,55 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Electric Car{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 offset-2">
+            <form action="" method="POST" novalidate class="shadow p-5">
+                {% csrf_token %}
+
+                {% if form %}
+                  {% for fm in form %}
+                    <div class="form-group fw-bold">
+                        {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+
+                <input type="submit" class="btn btn-primary mt-2" value="submit">
+            </form>
+            <hr>
+
+            <div class="row mt-2">
+                <h4 class="text-center alert alert-info mt-2">Only Electric Car Database Information</h4>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Make</th>
+                            <th scope="col">Model</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Battery Capacity</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for elc in electric %}
+                          <tr>
+                            <th scope="row">{{elc.id}}</th>
+                            <td>{{elc.make}}</td>
+                            <td>{{elc.model}}</td>
+                            <td>{{elc.year}}</td>
+                            <td>{{elc.battery_range}} kWh </td>
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
